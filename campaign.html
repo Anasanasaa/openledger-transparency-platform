@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenLedger — Campaign Detail</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Mobile sidebar overlay -->
+<div class="overlay-close" id="sidebarOverlay"></div>
+
+<div class="app-layout">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">📒</div>
+      <div class="logo-text">Open<span>Ledger</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-label">Main</span>
+      <button class="nav-item" data-page="dashboard" onclick="window.location.href='dashboard.html'">
+        <span class="nav-icon">🏠</span> Dashboard
+      </button>
+      <button class="nav-item" data-page="create" onclick="window.location.href='create.html'">
+        <span class="nav-icon">➕</span> New Campaign
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">AS</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarUserName">Loading…</div>
+          <div class="user-role">Campaign Manager</div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" title="Logout">↪</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ──────────────────────────────────── -->
+  <div class="main-content">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="hamburger" id="hamburger">☰</button>
+        <div class="topbar-left">
+          <div class="topbar-title">Campaign Detail</div>
+          <div class="topbar-sub">Full transparency view</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-outline btn-sm" onclick="window.location.href='dashboard.html'">← All Campaigns</button>
+      </div>
+    </header>
+
+    <!-- Page Body -->
+    <main class="page-content" id="campaignContent">
+
+      <!-- Back button -->
+      <button class="back-btn" id="backBtn">← Back</button>
+
+      <!-- ── Hero Card ── -->
+      <div class="detail-hero">
+        <div class="hero-top">
+          <div class="hero-emoji" id="campaignEmoji">🌊</div>
+          <div class="hero-meta">
+            <h1 class="hero-title" id="campaignTitle">Loading…</h1>
+            <span class="card-category hero-cat" id="campaignCategory">Category</span><br/>
+            <small style="color:var(--text-muted);font-size:12px" id="campaignCreator"></small>
+            <p class="hero-desc" id="campaignDesc" style="margin-top:10px"></p>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-row">
+          <span class="progress-label">Overall Progress</span>
+          <span class="progress-pct" id="campaignPct">0%</span>
+        </div>
+        <div class="progress-bar" style="height:8px;margin-bottom:20px">
+          <div class="progress-fill" id="campaignProgressFill" style="width:0%"></div>
+        </div>
+
+        <!-- Financial breakdown -->
+        <div class="detail-amounts">
+          <div class="detail-amt-card">
+            <div class="detail-amt-label">🎯 Goal</div>
+            <div class="detail-amt-value white" id="campaignGoal">—</div>
+          </div>
+          <div class="detail-amt-card">
+            <div class="detail-amt-label">💚 Total Raised</div>
+            <div class="detail-amt-value green" id="campaignRaised">—</div>
+          </div>
+          <div class="detail-amt-card">
+            <div class="detail-amt-label">💸 Total Spent</div>
+            <div class="detail-amt-value red" id="campaignSpent">—</div>
+          </div>
+          <div class="detail-amt-card">
+            <div class="detail-amt-label">💼 Balance</div>
+            <div class="detail-amt-value blue" id="campaignBalance">—</div>
+          </div>
+          <div class="detail-amt-card">
+            <div class="detail-amt-label">🙌 Donors</div>
+            <div class="detail-amt-value white" id="campaignDonors">—</div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="hero-actions">
+          <button class="btn btn-green" id="donateBtn">💚 Make a Donation</button>
+          <button class="btn btn-outline" id="expenseBtn">💸 Record Expense</button>
+        </div>
+      </div>
+
+      <!-- ── Transactions ── -->
+      <div class="detail-grid">
+        <div class="panel">
+          <div class="panel-title">📜 Transaction History</div>
+          <div class="tx-list" id="txList">
+            <!-- Rendered by app.js -->
+          </div>
+        </div>
+
+        <!-- Side info card -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="panel">
+            <div class="panel-title">💡 How it works</div>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+              Every donation and expense is recorded transparently on this page.
+              Donors can see exactly how their contributions are being used.
+            </p>
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px">
+                <span style="color:var(--green)">●</span>
+                <span style="color:var(--text-secondary)">Green = Donation received</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px">
+                <span style="color:var(--red)">●</span>
+                <span style="color:var(--text-secondary)">Red = Expense recorded</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">📊 Quick Stats</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;font-size:13px">
+                <span style="color:var(--text-muted)">Utilization Rate</span>
+                <span id="utilizationRate" style="font-weight:600;color:var(--accent)">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:13px">
+                <span style="color:var(--text-muted)">Avg. Donation</span>
+                <span id="avgDonation" style="font-weight:600">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ── Donate Modal ───────────────────────────────────────── -->
+<div class="modal-overlay" id="donateModal">
+  <div class="modal">
+    <h2 class="modal-title">💚 Make a Donation</h2>
+    <form id="donateForm" novalidate>
+      <div class="form-group">
+        <label class="form-label">Amount (₹) *</label>
+        <input class="form-input" type="number" id="donateAmount" placeholder="e.g. 500" min="1" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" type="text" id="donateName" placeholder="Leave blank for anonymous" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message (optional)</label>
+        <textarea class="form-textarea" id="donateNote" placeholder="Add a message of support…" rows="3"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-green" style="flex:1">Confirm Donation</button>
+        <button type="button" class="btn btn-outline" data-close-modal="donateModal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── Expense Modal ──────────────────────────────────────── -->
+<div class="modal-overlay" id="expenseModal">
+  <div class="modal">
+    <h2 class="modal-title">💸 Record Expense</h2>
+    <form id="expenseForm" novalidate>
+      <div class="form-group">
+        <label class="form-label">Amount (₹) *</label>
+        <input class="form-input" type="number" id="expenseAmount" placeholder="e.g. 10000" min="1" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description *</label>
+        <input class="form-input" type="text" id="expenseDesc" placeholder="e.g. Medical supplies purchased" required />
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-red" style="flex:1">Record Expense</button>
+        <button type="button" class="btn btn-outline" data-close-modal="expenseModal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  // Extra: update quick stats after init
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      const c = DB.getCampaign(params.get("id"));
+      if (!c) return;
+      const util = c.raised > 0 ? Math.round((c.spent / c.raised) * 100) : 0;
+      const txs  = DB.getCampaignTransactions(c.id).filter(t => t.type === "donation");
+      const avg  = txs.length > 0 ? Math.round(txs.reduce((s, t) => s + t.amount, 0) / txs.length) : 0;
+      document.getElementById("utilizationRate").textContent = util + "%";
+      document.getElementById("avgDonation").textContent = avg > 0 ? "₹" + avg.toLocaleString() : "—";
+    }, 100);
+  });
+</script>
+</body>
+</html>

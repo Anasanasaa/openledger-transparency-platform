@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenLedger — Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Mobile sidebar overlay -->
+<div class="overlay-close" id="sidebarOverlay"></div>
+
+<div class="app-layout">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">📒</div>
+      <div class="logo-text">Open<span>Ledger</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-label">Main</span>
+
+      <button class="nav-item" data-page="dashboard" onclick="window.location.href='dashboard.html'">
+        <span class="nav-icon">🏠</span> Dashboard
+      </button>
+
+      <button class="nav-item" data-page="create" onclick="window.location.href='create.html'">
+        <span class="nav-icon">➕</span> New Campaign
+      </button>
+
+      <span class="nav-label">Categories</span>
+
+      <button class="nav-item" onclick="filterByCategory('Medical')">
+        <span class="nav-icon">🏥</span> Medical
+      </button>
+      <button class="nav-item" onclick="filterByCategory('Education')">
+        <span class="nav-icon">📚</span> Education
+      </button>
+      <button class="nav-item" onclick="filterByCategory('NGO')">
+        <span class="nav-icon">🤝</span> NGO
+      </button>
+      <button class="nav-item" onclick="filterByCategory('Disaster')">
+        <span class="nav-icon">🆘</span> Disaster
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">AS</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarUserName">Aarav Sharma</div>
+          <div class="user-role">Campaign Manager</div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" title="Logout">↪</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ──────────────────────────────────── -->
+  <div class="main-content">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="hamburger" id="hamburger">☰</button>
+        <div class="topbar-left">
+          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+          <div class="topbar-sub">Transparent fund tracking platform</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-badge">Platform: <strong>Live</strong></div>
+        <button class="btn btn-primary btn-sm" id="createCampaignBtn">+ New Campaign</button>
+      </div>
+    </header>
+
+    <!-- Page Body -->
+    <main class="page-content">
+
+      <!-- Stats Row -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">📋</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statCampaigns">—</div>
+            <div class="stat-label">Active Campaigns</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">💰</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statRaised">—</div>
+            <div class="stat-label">Total Raised</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red">💸</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statSpent">—</div>
+            <div class="stat-label">Total Spent</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon yellow">🙌</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statDonors">—</div>
+            <div class="stat-label">Total Donors</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Campaign List Section -->
+      <div class="section-header">
+        <h2 class="section-title">All Campaigns</h2>
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-cat="All">All</button>
+          <button class="filter-tab" data-cat="Medical">🏥 Medical</button>
+          <button class="filter-tab" data-cat="Education">📚 Education</button>
+          <button class="filter-tab" data-cat="NGO">🤝 NGO</button>
+          <button class="filter-tab" data-cat="Disaster">🆘 Disaster</button>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="campaigns-grid" id="campaignsGrid">
+        <!-- Rendered by app.js -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  // Quick helper so sidebar category buttons also work
+  function filterByCategory(cat) {
+    document.querySelectorAll(".filter-tab").forEach(t => {
+      t.classList.toggle("active", t.dataset.cat === cat);
+    });
+    renderCampaigns(cat);
+  }
+</script>
+</body>
+</html>
